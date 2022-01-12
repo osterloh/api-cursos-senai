@@ -3,10 +3,10 @@ package br.com.senai.domain.service;
 import br.com.senai.domain.model.Curso;
 import br.com.senai.domain.repository.CursoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -18,8 +18,12 @@ public class CursoService {
 		return cursoRepository.findAll();
 	}
 
-	public ResponseEntity<Curso> buscarCurso(Long id){
-		return cursoRepository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	public Optional<Curso> buscarCurso(Long id){
+		return cursoRepository.findById(id);
+	}
+
+	public boolean existsCurso(Long cursoId){
+		return cursoRepository.existsById(cursoId);
 	}
 
 	@Transactional
@@ -29,6 +33,9 @@ public class CursoService {
 
 	@Transactional
 	public Curso atualizar(Long idCurso, Curso curso){
+		Curso findCurso = buscarCurso(idCurso).orElse(null);
+		curso.setCurso(findCurso.getCurso());
+		curso.setId(idCurso);
 		return cursoRepository.save(curso);
 	}
 
