@@ -1,6 +1,7 @@
 package br.com.senai.api.modelMapper.assembler;
 
 import br.com.senai.api.modelDTO.CursoDTO;
+import br.com.senai.api.modelDTO.input.CursoUpdateInputDTO;
 import br.com.senai.domain.model.Curso;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,6 +21,10 @@ public class CursoAssembler {
 	}
 
 	public Curso toEntity(CursoDTO cursoDTO){
+		return modelMapper.map(cursoDTO, Curso.class);
+	}
+
+	public Curso toEntity(CursoUpdateInputDTO cursoDTO){
 		return modelMapper.map(cursoDTO, Curso.class);
 	}
 
