@@ -3,11 +3,12 @@ package br.com.senai.api.modelDTO.input;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
-public class CursoInputDTO {
-	long id;
-	String curso;
+public class CursoUpdateInputDTO {
 	int totalDeVagas;
-	String vagasDisponiveisAte;
+	int vagasDisponiveis;
+	Date vagasDisponiveisAte;
 }
