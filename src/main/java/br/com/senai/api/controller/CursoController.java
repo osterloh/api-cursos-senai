@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,10 @@ public class CursoController {
 
 	@PutMapping("{cursoId}")
 	public ResponseEntity<CursoDTO> atualizarCurso(@PathVariable Long cursoId, @RequestBody CursoUpdateInputDTO cursoUpdateInputDTO){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(cursoUpdateInputDTO.getVagasDisponiveisAte());
+		cal.add(Calendar.DAY_OF_MONTH, 1);
+		cursoUpdateInputDTO.setVagasDisponiveisAte(cal.getTime());
 		Curso curso = cursoAssembler.toEntity(cursoUpdateInputDTO);
 
 		if(!cursoService.existsCurso(cursoId)){
