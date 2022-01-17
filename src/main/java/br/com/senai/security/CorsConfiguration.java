@@ -1,4 +1,4 @@
-package br.com.senai.domain.security;
+package br.com.senai.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
