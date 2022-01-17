@@ -7,20 +7,23 @@ import br.com.senai.api.modelMapper.assembler.CursoAssembler;
 import br.com.senai.domain.model.Curso;
 import br.com.senai.domain.service.CursoService;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
+import static lombok.AccessLevel.PRIVATE;
+
+@FieldDefaults(level = PRIVATE)
 @AllArgsConstructor
 @RestController
 @RequestMapping("/curso")
 public class CursoController {
 
-	private CursoAssembler cursoAssembler;
-	private CursoService cursoService;
+	CursoAssembler cursoAssembler;
+	CursoService cursoService;
 
 	@GetMapping
 	public List<CursoDTO> listarCurso(){
@@ -29,9 +32,9 @@ public class CursoController {
 
 	@GetMapping("{cursoId}")
 	public ResponseEntity<CursoDTO> buscarCurso(@PathVariable Long cursoId){
-		Optional<Curso> curso = cursoService.buscarCurso(cursoId);
+		Curso curso = cursoService.buscarCurso(cursoId);
 
-		return curso.map(value -> ResponseEntity.ok(cursoAssembler.toModel(value))).orElseGet(() -> ResponseEntity.notFound().build());
+		return ResponseEntity.ok(cursoAssembler.toModel(curso));
 	}
 
 	@PostMapping
